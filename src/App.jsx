@@ -5,6 +5,39 @@ import './global.css';
 import styles from './App.module.css';
 import { Sidebar } from './components/Sidebar';
 
+const posts = [
+	{
+		id: 1,
+		author: {
+			id: 1,
+			avatarUrl: 'https://github.com/alexandronrossi.png',
+			name: 'Alexandro N. Rossi',
+			role: 'Web Developer'
+		},
+		content: [
+			{ type: 'paragraph', content: 'Fala galera!' },
+			{ type: 'paragraph', content: 'Acabei de terminar esse cursinho delicinha.' },
+			{ type: 'link', content: 'javascript:void(0)">jane.design/doctorcare', 'url': '' },
+		],
+		publishedAt: new Date('2022-05-03 20:00:00')
+	},
+	{
+		id: 2,
+		author: {
+			id: 1,
+			avatarUrl: 'https://github.com/alexandronrossi.png',
+			name: 'Alexandro N. Rossi',
+			role: 'Web Developer'
+		},
+		content: [
+			{ type: 'paragraph', content: 'Fala galera!' },
+			{ type: 'paragraph', content: 'Acabei de terminar esse cursinho delicinha.' },
+			{ type: 'link', content: 'jane.design/doctorcare', 'url': 'javascript:void(0)' },
+		],
+		publishedAt: new Date('2024-08-04 09:00:00')
+	}
+];
+
 export function App() {
 	return (
 		<div>
@@ -14,20 +47,15 @@ export function App() {
 				<Sidebar />
 
 				<main>
-					<Post
-						author="Alexandro do Nascimento Rossi"
-						content="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque doloremque, officiis, numquam architecto ducimus iste laborum atque quae animi ad fuga? Id quos veniam perspiciatis ea harum nihil tenetur fugiat."
-					/>
-
-					<Post
-						author="Alexandro do Nascimento Rossi"
-						content="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque doloremque, officiis, numquam architecto ducimus iste laborum atque quae animi ad fuga? Id quos veniam perspiciatis ea harum nihil tenetur fugiat."
-					/>
-
-					<Post
-						author="Alexandro do Nascimento Rossi"
-						content="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque doloremque, officiis, numquam architecto ducimus iste laborum atque quae animi ad fuga? Id quos veniam perspiciatis ea harum nihil tenetur fugiat."
-					/>
+					{posts.map(post => {
+						return (
+							<Post
+								author={ post.author }
+								content={ post.content }
+								publishedAt= { post.publishedAt }
+							/>
+						)
+					})}
 				</main>
 			</div>
 

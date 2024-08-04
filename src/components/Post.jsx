@@ -10,20 +10,27 @@ import { Avatar } from './Avatar';
 export function Post({ author, content, publishedAt }) {
     const [comments, setComments] = useState(['Muito bom Devon, parabéns!! 👏👏']);
     const [newComentText, setNewComentText] = useState('');
-    
-    const publishedAtDateFormatted = format(publishedAt, "d 'de' LLLL 'às' HH:mm'h'", {locale: ptBR});
-    const publishedRelativeToNow = formatDistanceToNow(publishedAt, {locale: ptBR, addSuffix: true});
+
+    const publishedAtDateFormatted = format(publishedAt, "d 'de' LLLL 'às' HH:mm'h'", { locale: ptBR });
+    const publishedRelativeToNow = formatDistanceToNow(publishedAt, { locale: ptBR, addSuffix: true });
 
     function handleCreateNewComment() {
         event.preventDefault();
-        
+
         setComments([...comments, newComentText]);
         setNewComentText('');
     }
 
-    function handleNewCommentChange()
-    {
+    function handleNewCommentChange() {
         setNewComentText(event.target.value);
+    }
+
+    function deleteComment(commentToDelete) {
+        const commentsWithoutDeletedOne = comments.filter(comment => {
+            return comment !== commentToDelete;
+        });
+
+        setComments(commentsWithoutDeletedOne);
     }
 
     return (
@@ -68,9 +75,14 @@ export function Post({ author, content, publishedAt }) {
             </form>
 
             <div className={styles.commentList}>
-
                 {comments.map((comment) => {
-                    return <Comment key={comment} content={comment} />
+                    return (
+                        <Comment
+                            key={comment}
+                            content={comment}
+                            deleteComment={deleteComment}
+                        />
+                    )
                 })}
             </div>
 

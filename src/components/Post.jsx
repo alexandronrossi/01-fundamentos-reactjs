@@ -8,22 +8,22 @@ import { Comment } from './Comment';
 import { Avatar } from './Avatar';
 
 export function Post({ author, content, publishedAt }) {
-const [comments, setComments] = useState([1,2]);
+    const [comments, setComments] = useState(['Muito bom Devon, parabéns!! 👏👏']);
+    const [newComentText, setNewComentText] = useState('');
+    
+    const publishedAtDateFormatted = format(publishedAt, "d 'de' LLLL 'às' HH:mm'h'", {locale: ptBR});
+    const publishedRelativeToNow = formatDistanceToNow(publishedAt, {locale: ptBR, addSuffix: true});
 
-    const publishedAtDateFormatted = format(publishedAt, "d 'de' LLLL 'às' HH:mm'h'", {
-        locale: ptBR
-    });
-
-    const publishedRelativeToNow = formatDistanceToNow(publishedAt, {
-        locale: ptBR,
-        addSuffix: true
-    });
-
-    function handleCreateNewComment()
-    {
+    function handleCreateNewComment() {
         event.preventDefault();
+        
+        setComments([...comments, newComentText]);
+        setNewComentText('');
+    }
 
-        setComments([...comments, comments.length + 1]);
+    function handleNewCommentChange()
+    {
+        setNewComentText(event.target.value);
     }
 
     return (
@@ -56,7 +56,10 @@ const [comments, setComments] = useState([1,2]);
                 <strong>Deixe seu feedback</strong>
 
                 <textarea
+                    name='comment'
+                    value={newComentText}
                     placeholder='Deixe um comentário'
+                    onChange={handleNewCommentChange}
                 />
 
                 <footer>
@@ -66,8 +69,8 @@ const [comments, setComments] = useState([1,2]);
 
             <div className={styles.commentList}>
 
-                {comments.map(coment => {
-                    return <Comment />
+                {comments.map(comment => {
+                    return <Comment content={comment} />
                 })}
             </div>
 
